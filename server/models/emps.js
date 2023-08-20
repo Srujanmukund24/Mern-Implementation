@@ -10,6 +10,6 @@ const employeeSchema=new Schema({
     password:String
 })
 
-const EmployeeModel=moongoose.model('Employee',userSchema);
+const EmployeeModel=mongoose.model('Employee',employeeSchema);
 
 module.exports=EmployeeModel;

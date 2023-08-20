@@ -8,6 +8,7 @@ import Home from './pages/Home'
 import LoginEmployee from './pages/LoginEmp'
 import RegisterEmployee from './pages/RegisterEmp'
 import axios from 'axios'
+import {Toaster} from 'react-hot-toast'
 
 axios.defaults.baseURL='http://localhost:8000'
 axios.defaults.withCredentials=true
@@ -18,6 +19,7 @@ function App() {
   return (
     <>
     <Navbar/>
+    <Toaster position='top-right' toastOptions={{duration:2000}}/>
     <Routes>
       <Route path='/' element={<Home/>}></Route>
       <Route path='/EmployeeLogin' element={<LoginEmployee/>}></Route>
