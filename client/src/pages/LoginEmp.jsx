@@ -1,16 +1,34 @@
 import axios from 'axios'
 import { useState } from 'react'
+import{toast} from 'react-hot-toast'
+import {useNavigate} from 'react-router-dom'
 import './style/formarea.css'
 
 const LoginEmp = () => {
-
+  const navigate=useNavigate();
   const [data,setData]=useState({
     email:'',
     password:'',
   })
-  const loginEmployee=(e)=>{
+  const loginEmployee=async(e)=>{
     e.preventDefault()
-    axios.get('/')
+    const {email,password}=data
+    try {
+      const {data}=await axios.post('/loginemployee',{
+        email,
+        password
+      })
+      if(data.error){
+        toast.error(data.error)
+      }
+      else{
+        setData({})
+        toast.success("Logged IN Successfully");
+        navigate('/ApplicantHome');
+      }
+    } catch (error) {
+      
+    }
   }
   return (
     <div className="formareasection"> 

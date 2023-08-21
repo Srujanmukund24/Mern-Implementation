@@ -9,6 +9,7 @@ import LoginEmployee from './pages/LoginEmp'
 import RegisterEmployee from './pages/RegisterEmp'
 import axios from 'axios'
 import {Toaster} from 'react-hot-toast'
+import ApplicantHome from './pages/ApplicantHome'
 
 axios.defaults.baseURL='http://localhost:8000'
 axios.defaults.withCredentials=true
@@ -24,6 +25,7 @@ function App() {
       <Route path='/' element={<Home/>}></Route>
       <Route path='/EmployeeLogin' element={<LoginEmployee/>}></Route>
       <Route path='/EmployeeRegister' element={<RegisterEmployee/>}></Route>
+      <Route path='/ApplicantHome' element={<ApplicantHome/>}></Route>
     </Routes>
     </>
   )

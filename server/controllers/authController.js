@@ -1,10 +1,11 @@
 const Employee=require('../models/emps')
-
+const {hashPassword,comparePassword}=require('../helpers/auth')
 
 const test=(req,res)=>{
     res.json('test is working')
 }
 
+//Register a Applicant 
 const registerEmployee=async (req,res)=>{
    try {
        const {username,email,password}=req.body;
@@ -29,17 +30,51 @@ const registerEmployee=async (req,res)=>{
         })
        };
        
+
+       const hashedPassword =await hashPassword(password)
        // Adding Applicant to the Database.
        const emp=await Employee.create({
-          username,email,password
-       })
+          username,
+          email,
+          password:hashedPassword
+       });
        
        return res.json(emp);
    } catch (error) {
         console.log("error while register",error);
    }
 }
+
+// Login Applicant :
+    const loginEmployee= async(req,res)=>{
+         try {
+            const {email,password}=req.body;
+
+            //check if Employee exists:
+           const emp=await Employee.findOne({email});
+           if(!emp){
+            return res.json({
+                error:'No User Found Plese Register!'
+              })
+           } 
+
+           //check password match:
+           const match=await comparePassword(password,emp.password)
+          if(match){
+              res.json('Password Matched')
+          }
+          else{
+            res.json({
+                error:'Password Incorrect.'
+            })
+          }
+         }catch (error) {
+             console.log('error');
+         }
+    }
+
 module.exports={
     test,
-    registerEmployee
+    registerEmployee,
+    loginEmployee
 }
