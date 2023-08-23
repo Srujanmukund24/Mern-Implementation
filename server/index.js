@@ -3,6 +3,7 @@ const dotenv=require('dotenv').config()
 const cors=require('cors')
 const {mongoose}=require('mongoose')
 const app=express();
+const cookieParser=require('cookie-parser')
 
 //DataBase Connnected:
 mongoose.connect(process.env.MONGO_URL)
@@ -12,6 +13,8 @@ mongoose.connect(process.env.MONGO_URL)
 
 //middleware:
 app.use(express.json())
+app.use(cookieParser())
+app.use(express.urlencoded({extended:false}))
 
 //routes :
 app.use('/',require('./routes/authRoutes'))

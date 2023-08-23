@@ -1,5 +1,6 @@
 const Employee=require('../models/emps')
 const {hashPassword,comparePassword}=require('../helpers/auth')
+const jwt =require('jsonwebtoken')
 
 const test=(req,res)=>{
     res.json('test is working')
@@ -62,6 +63,13 @@ const registerEmployee=async (req,res)=>{
            const match=await comparePassword(password,emp.password)
           if(match){
               res.json('Password Matched')
+              jwt.sign({
+                email:emp.email,
+                id:emp._id,
+                username:emp.username},process.env.JWT_SECRET ,{},(err,token)=>{
+                    if(err) throw err;
+                    response.cookie('token',token).json(emp)
+                })
           }
           else{
             res.json({
@@ -73,8 +81,22 @@ const registerEmployee=async (req,res)=>{
          }
     }
 
+    const getprofile=(req,res)=>{
+        const {token}=req.cookies
+        if(token){
+            jwt.verify(token,process.env.JWT_SECRET,{},(err,emp)=>{
+                if(err) throw err;
+                res.json(emp);
+            })
+        }
+        else{
+            res.json(null)
+        }
+    }
+     
 module.exports={
     test,
     registerEmployee,
-    loginEmployee
+    loginEmployee,
+    getprofile
 }

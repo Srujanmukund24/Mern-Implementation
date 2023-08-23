@@ -10,14 +10,16 @@ import RegisterEmployee from './pages/RegisterEmp'
 import axios from 'axios'
 import {Toaster} from 'react-hot-toast'
 import ApplicantHome from './pages/ApplicantHome'
+import {EmpContextProvider}  from '../context/empContext'
 
 axios.defaults.baseURL='http://localhost:8000'
 axios.defaults.withCredentials=true
 
 function App() {
-  const [count, setCount] = useState(0)
+  // const [count, setCount] = useState(0)
 
   return (
+    // <EmpContextProvider>
     <>
     <Navbar/>
     <Toaster position='top-right' toastOptions={{duration:2000}}/>
@@ -28,7 +30,8 @@ function App() {
       <Route path='/ApplicantHome' element={<ApplicantHome/>}></Route>
     </Routes>
     </>
-  )
+    /* </EmpContextProvider> */
+  );
 }
 
 export default App
